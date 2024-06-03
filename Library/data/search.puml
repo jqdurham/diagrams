@@ -1,0 +1,26 @@
+@startuml
+json "<b>ArtifactDocument" as doc {
+    "id": 123,
+    "identifiers": {"isbn": "0143107323"},
+    "authors": [{
+        "id": 456,
+        "first_name": "Mark",
+        "last_name": "Twain"
+    }],
+    "title": "Adventures of Huckleberry Finn",
+    "published_on": "2014-06-01",
+    "genres": [
+        {"id": 10, "name": "fiction"},
+        {"id": 11, "name": "adventure fiction"},
+        {"id": 12, "name": "humor"},
+        {"id": 13, "name": "satire"}
+    ],
+    "language": "English",
+    "publisher": "Penguin Classics; Reissue edition",
+    "pages": 400,
+    "status": {
+        "1": { "qty_available": 0, "due_on": "2024-06-30" },
+        "2": { "qty_available": 2, "due_on": null }
+    }
+}
+@enduml

@@ -1,0 +1,84 @@
+@startuml
+autonumber
+
+actor Anonymous as anon
+actor Librarian as lib
+entity API as api
+box Search #TECHNOLOGY
+    entity Search as search
+    collections Docs as docs
+end box
+box Artifact #LightBlue
+    entity Artifacts as art
+    database ArtifactDB as artDB
+end box
+box Check-in/Check-Out #LightYellow
+    entity CICO as cico
+    database CICODB as cicoDB
+end box
+entity EventBroker as q
+
+header Library Use Cases
+footer Page %page% of %lastpage%
+
+title Find Artifacts
+
+alt Search
+    anon -> api ++: GET /search?params
+    api -> search ++: /SearchArtifacts(SearchArtifactsRequest)
+    search <-> docs: ScanArtifactIndexes
+    return SearchArtifactsResponse
+    return HTTP 200 OK []SearchResults
+end
+
+alt Get Complete Artifact
+    anon -> api ++: GET /artifact/{id}
+    api -> art ++: /GetArtifact(GetArtifactRequest)
+    art <-> artDB: GetArtifact(By:ID)
+    return GetArtifactResponse
+    return HTTP 200 OK Artifact
+end
+
+
+newpage Check Out
+
+lib -> api ++: POST /check-out
+api -> cico ++: CheckOut(CheckOutRequest)
+cico -> cico: IsPermitted()
+cico <-> cicoDB: CheckOut()
+cico -> q: ArtifactCheckedOut
+return CheckoutResponse
+return HTTP 202 Accepted
+art <- q ++: ArtifactCheckedOut
+art -> artDB: DecrementQuantity
+art -> q -- : ArtifactQuantityChanged
+search <- q ++: ArtifactQuantityChanged
+search -> docs --: UpdateArtifactDoc
+
+newpage Check In
+
+lib -> api ++: POST /check-in
+api -> cico ++: CheckIn(CheckInRequest)
+cico -> cico: IsPermitted()
+cico <-> cicoDB: CheckIn()
+cico -> q: ArtifactCheckedIn
+return CheckInResponse
+return HTTP 202 Accepted
+art <- q ++: ArtifactCheckedIn
+art -> artDB: IncrementQuantity
+art -> q --: ArtifactQuantityChanged
+search <- q ++: ArtifactQuantityChanged
+search -> docs --: UpdateArtifactDoc
+
+newpage Add a Book
+
+lib -> api ++: POST /artifact
+api -> art ++: CreateArtifact(CreateArtifactRequest)
+art -> artDB: InsertArtifact()
+art -> q: ArtifactCreated
+return CreateArtifactResponse
+return HTTP 201 Created
+search <- q ++: ArtifactCreated
+search -> docs --: UpdateArtifactDoc
+
+@enduml

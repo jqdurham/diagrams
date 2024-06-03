@@ -1,0 +1,60 @@
+@startuml
+json "<b>Artifact" as art {
+    "id": 123,
+    "title": "Adventures of Huckleberry Finn",
+    "published_on": "2014-06-01",
+    "language": "English",
+    "description": "The classic boyhood adventure tale...",
+    "publisher (nullable)": "Penguin Classics; Reissue edition",
+    "pages (nullable)": 400
+}
+
+json "<b>ArtifactExternalIdentifier</b>" as extID {
+    "": [
+        {"artifact_id": 123, "isbn": "978-0143107323"}
+    ]
+}
+
+json "<b>Author</b>" as author {
+    "": [
+        {"id": 456, "first_name": "Mark", "last_name": "Twain"}
+    ]
+}
+
+json "<b>ArtifactAuthor</b>" as artAuth {
+    "": [
+        {"artifact_id": 123, "author_id": 456}
+    ]
+}
+
+json "<b>ArtifactGenre</b>" as artGenre {
+    "": [
+        {"artifact_id": 123, "genre_id": 10},
+        {"artifact_id": 123, "genre_id": 11},
+        {"artifact_id": 123, "genre_id": 12},
+        {"artifact_id": 123, "genre_id": 13}
+    ]
+}
+
+json "<b>Genre</b>" as genre {
+    "": [
+        {"id": 10, "name": "fiction"},
+        {"id": 11, "name": "adventure fiction"},
+        {"id": 12, "name": "humor"},
+        {"id": 13, "name": "satire"}
+    ]
+}
+
+json "<b>ArtifactLocationStatus</b>" as artStatus {
+    "": [
+        {"artifact_id": 123, "location_id": 1, "qty_available": 0, "due_on": "2024-06-30"}
+    ]
+}
+
+art -> artAuth
+art -> extID
+artAuth -> author
+art -> artGenre
+artGenre -> genre
+art -> artStatus
+@enduml
