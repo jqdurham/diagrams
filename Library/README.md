@@ -5,9 +5,6 @@ out books from a library.  The requirements, assumptions and design consideratio
 included in the first document below.  It is recommended that you review the documents in the 
 order listed.
 
-> **Note:** Some links require either Draw.io or PlantUML to load the original files.  I have 
-> included PNGs as well for your convenience.
-
 ## Overview
 
 ### [Requirements, design decisions & logical diagram](./system/library.drawio)
@@ -36,10 +33,6 @@ order listed.
 
 ## Data Models
 
-> **Note:** The tool I used for this (PlantUML) is not well-suited for this purpose and I did not 
-> have enough time to convert them. I typically write SQL statements for this purpose when I'm 
-> not modeling vaporware.
-
 ## Search Service
 
 Artifact Document - Denormalized representation of an artifact (book, magazine, or CD) from 
@@ -66,8 +59,8 @@ which indexes may be derived to provide rich and fast searching.
     "publisher": "Penguin Classics; Reissue edition",
     "pages": 400,
     "status": {
-        "1": { "qty_available": 0, "due_on": "2024-06-30" },
-        "2": { "qty_available": 2, "due_on": null }
+        "location_1": { "qty_available": 0, "due_on": "2024-06-30" },
+        "location_2": { "qty_available": 2, "due_on": null }
     }
 }
 ```
