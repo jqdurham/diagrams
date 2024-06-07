@@ -1,0 +1,16 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table RecentTransaction {
+    Note: '''Table cannot grow unconstrained and must be managed by offloading aged-out
+    transactions. An aged-out transaction are those where "out_on" > N months and "in_on" is not
+    NULL.'''
+
+    id integer [primary key]
+    location_id integer
+    artifact_id integer
+    user_id integer
+    out_on datetime
+    in_on datetime [null]
+    due_by date
+}

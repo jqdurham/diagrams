@@ -45,20 +45,48 @@ order listed.
 Artifact Document - Denormalized representation of an artifact (book, magazine, or CD) from 
 which indexes may be derived to provide rich and fast searching.
 
-![](./data/search.png)
+```json
+{
+    "id": 123,
+    "identifiers": {"isbn": "0143107323"},
+    "authors": [{
+        "id": 456,
+        "first_name": "Mark",
+        "last_name": "Twain"
+    }],
+    "title": "Adventures of Huckleberry Finn",
+    "published_on": "2014-06-01",
+    "genres": [
+        {"id": 10, "name": "fiction"},
+        {"id": 11, "name": "adventure fiction"},
+        {"id": 12, "name": "humor"},
+        {"id": 13, "name": "satire"}
+    ],
+    "language": "English",
+    "publisher": "Penguin Classics; Reissue edition",
+    "pages": 400,
+    "status": {
+        "1": { "qty_available": 0, "due_on": "2024-06-30" },
+        "2": { "qty_available": 2, "due_on": null }
+    }
+}
+```
 
 ## Artifact Service
 
-Artifact Database - System of record for books, magazines and other artifacts available for 
+[Artifact Database](data/artifact.dbml) - System of record for books, magazines and other 
+artifacts available. See [artifact.dbml](data/artifact.dbml) for more details.
+for 
 check-out in the library.
 
-![](./data/artifact.png)
+![](data/Artifact.svg)
 
 ## Check-in/Check-out "CICO" Service 
 
-CICO Database - System of record for check-in and check-out events.
+[CICO Database](data/CICO.dbml) - System of record for check-in and check-out events. See 
+[cico.dbml](data/CICO.dbml) for more details.
 
-![](./data/checkout.png)
+![](data/CICO.svg)
 
 ## [AWS EKS Design](./system/eks.drawio)
 

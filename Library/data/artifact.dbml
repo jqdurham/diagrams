@@ -1,0 +1,78 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Artifact {
+  id integer [primary key]
+  title varchar
+  published_on timestamp
+  language varchar
+  description text
+  publisher varchar [null]
+  pages integer [null]
+}
+
+Table ArtifactExternalIdentifier {
+  artifact_id int
+  type ArtifactExternalIdentifierType
+  value varchar
+
+  indexes {
+    (artifact_id, type) [unique]
+  }
+}
+
+enum ArtifactExternalIdentifierType {
+  isbn
+  issn
+  other
+}
+
+Table Author {
+  id integer [primary key]
+  first_name varchar
+  last_name varchar
+}
+
+Table ArtifactAuthor {
+  artifact_id integer
+  author_id integer
+
+  indexes {
+    (artifact_id, author_id) [unique]
+  }
+}
+
+Table ArtifactGenre {
+  artifact_id integer
+  genre_id integer
+
+  indexes {
+    (artifact_id, genre_id) [unique]
+  }
+}
+
+Table Genre {
+  id integer [primary key]
+  name varchar
+}
+
+Table ArtifactLocationStatus {
+  artifact_id integer
+  location_id integer
+  qty_available integer
+  due_on date
+
+  indexes {
+    (artifact_id, location_id) [unique]
+  }
+}
+
+Ref: Artifact.id > ArtifactAuthor.artifact_id
+Ref: ArtifactAuthor.author_id > Author.id
+
+Ref: Artifact.id > ArtifactExternalIdentifier.artifact_id
+
+Ref: Artifact.id > ArtifactGenre.artifact_id
+Ref: ArtifactGenre.genre_id > Genre.id
+
+Ref: Artifact.id > ArtifactLocationStatus.artifact_id

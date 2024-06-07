@@ -1,8 +1,0 @@
-@startuml
-json "<b>Events</b>" as events {
-    "": [
-        {"artifact_id": 123, "location_id": 1, "user_id": 45, "event": "check-in", "due_on": "null"},
-        {"artifact_id": 123, "location_id": 1, "user_id": 1337, "event": "check-out", "due_on": "2024-06-01"}
-    ]
-}
-@enduml
